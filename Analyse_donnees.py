@@ -13,3 +13,4 @@ import pandas as pd
 #train.values[:,15].value_counts()
 histo=pd.value_counts(train.values[:,15])
 print(histo)
+histo[1:].plot.bar()
