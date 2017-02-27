@@ -116,6 +116,31 @@ def pretraitement(x_train,y_train,x_test):
     x_test.loc[(x_test.age>=60) & (x_test.age<70),'age'] = 60
     x_test.loc[(x_test.age>=70) & (x_test.age<80),'age'] = 70
     x_test.loc[(x_test.age>=80) & (x_test.age<=90),'age'] = 80
+    
+    
+    ### binarisation des variables catégorielles ###
+    
+    #encodage variables catégorielles avec type de valeurs = chaines de caractères
+    attributs = x_train.transpose().to_dict().values() #transposition
+    
+    Dvec = DictVectorizer()
+    attributs = Dvec.fit_transform(attributs).toarray()
+    print(attributs)
+    print(Dvec.get_feature_names())
+    feature_names = Dvec.get_feature_names()
+    indice_signup_flow = feature_names.index('signup_flow')
+    print('indice : ',indice_signup_flow) #112
+    print(np.shape(attributs)) #(213451, 118)
+    print(type(attributs))
+    print('att : ',attributs)
+    
+    #encodage variable catégorielle avec type de valeurs = nombres
+    signup_flow = attributs[:,indice_signup_flow].reshape(-1,1) #array taille (213451, 1)
+    enc = OneHotEncoder()
+    enc.fit_transform(signup_flow)
+    print(enc.n_values_)
+    print(enc.get_params())
+    print(signup_flow) #### NE MARCHE PAS, RENVOIE PAREIL QUE L ENTREE GRRRRRRRRR
 
 #    print(y_train)
     print('')     
