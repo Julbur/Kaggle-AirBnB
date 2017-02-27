@@ -126,7 +126,7 @@ def pretraitement(x_train,y_train,x_test):
     Dvec = DictVectorizer()
     attributs = Dvec.fit_transform(attributs).toarray()
     print(attributs)
-    print(Dvec.get_feature_names())
+    print(Dvec.get_feature_names()) # -> FONCTIONNE
     feature_names = Dvec.get_feature_names()
     indice_signup_flow = feature_names.index('signup_flow')
     print('indice : ',indice_signup_flow) #112
