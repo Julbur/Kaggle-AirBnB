@@ -136,7 +136,7 @@ def binarisation(x):
     #encodage variables catégorielles avec type de valeurs = chaines de caractères
     attributs = x.transpose().to_dict().values() #transposition
     
-    Dvec = DictVectorizer()
+    Dvec = DictVectorizer() #Pour binariser quand les valeurs sont des chaines de caractères
     attributs = Dvec.fit_transform(attributs).toarray()
     print(attributs)
     print(Dvec.get_feature_names()) #OK !
@@ -167,7 +167,7 @@ def binarisation(x):
     
     #encodage variable catégorielle avec type de valeurs = nombres
     signup_flow = attributs[:,indice_signup_flow].reshape(-1,1)
-    enc = OneHotEncoder()
+    enc = OneHotEncoder() #Pour binariser quand les valeurs sont des nombres
     enc.fit_transform(signup_flow)
     print(enc.n_values_)
     print(enc.get_params())
