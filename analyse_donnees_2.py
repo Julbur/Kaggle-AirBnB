@@ -176,6 +176,85 @@ def binarisation(x):
 #    print(x.iloc[0,:])
 
     return x
+
+
+def binarisation2(x,x_test):
+    
+     
+#    cols = x.columns
+#    print('cols',cols)
+#    print(cols[:3])
+#    cols = cols[3]|cols[:3]|cols[4:]
+#    print(cols)
+#    
+#    print('col : ',x.columns)
+#    signup_f = x.iloc[:,3].reshape(-1,1)
+#    
+#    enc = OneHotEncoder()
+#    enc.fit(signup_f)
+#    
+#    print(enc.n_values_)
+#    print(enc.get_params())
+#    print(signup_f)
+#    print(x.iloc[:,3])
+    
+    
+    ##
+    
+    
+#    
+#    print(x)
+    
+    #encodage variables catégorielles avec type de valeurs = chaines de caractères
+    attributs = x.transpose().to_dict().values() #transposition
+    att_test = x_test.transpose().to_dict().values()
+    
+    Dvec = DictVectorizer()
+    Dvec.fit(attributs)
+    attributs = Dvec.transform(attributs).toarray().tolist()
+    att_test = Dvec.transform(att_test).toarray().tolist() #pour avoir le même nb de colonnes en train et test
+#    print(attributs)
+    attributs = [[int(i) for i in j] for j in attributs] #### PB AVEC LES NA
+    
+#    print(attributs)
+    print(Dvec.get_feature_names()) #OK !
+    feature_names = Dvec.get_feature_names()
+    indice_signup_flow = feature_names.index('signup_flow')
+    print('indice : ',indice_signup_flow) #89
+    print(np.shape(attributs)) #(62096,96)
+    print(np.shape(att_test))
+    print(type(attributs))
+    print('attributs : ',attributs[0])
+    
+#    enc = OneHotEncoder(categorical_features=[indice_signup_flow],handle_unknown='error', n_values='auto', sparse=True)
+#    enc.fit(att)
+#    print(enc.n_values_)
+#    print(enc.feature_indices_)
+#    enc.transform(att).toarray()
+#    
+#    print(type(att[:,indice_signup_flow]))
+#    print(np.shape(att[:,indice_signup_flow]))
+#    signup_flow = att[:,indice_signup_flow]
+#    print(type(signup_flow))
+#    print(np.shape(signup_flow))
+#    
+#    print(signup_flow)
+    
+#    print(Dvec.get_feature_names())
+#    print(type(att))
+#    print(np.shape(att))
+    
+    ##encodage variable catégorielle avec type de valeurs = nombres
+    signup_flow = attributs[:,indice_signup_flow].reshape(-1,1)
+    enc = OneHotEncoder()
+    enc.fit_transform(signup_flow)
+    print(enc.n_values_)
+    print(enc.get_params())
+    print(signup_flow[:100])
+       
+#    print(x.iloc[0,:])
+
+    return attributs,att_test
     
     
 def main():
